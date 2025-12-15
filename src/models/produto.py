@@ -1,15 +1,34 @@
 
 # src/models/produto.py
 
+from __future__ import annotations
+
 class Produto:
-    def __init__(self, id: int, nome: str, preco: float, ativo: bool = True) -> None:
-        self.id: int = id
+    def __init__(self, id_: int, nome: str, preco: float, ativo: bool = True) -> None:
+        self._id: int = id_
         self.nome: str = nome
-        self.preco: float = preco
+        self._preco: float = preco
         self.ativo: bool = ativo
 
     def __str__(self) -> str:
-        return f"Produto(id={self.id}, nome='{self.nome}', preco={self.preco}, ativo={self.ativo})"
+        return f"Produto(id={self.id}, nome='{self.nome}', preco={self.preco:.2f}, ativo={self.ativo})"
+
+    @property
+    def id(self) -> int:
+        """ID somente leitura."""
+        return self._id
+
+    @property
+    def preco(self) -> float:
+        """Getter para preço."""
+        return self._preco
+
+    @preco.setter
+    def preco(self, valor: float) -> None:
+        """Setter para preço (com validação)."""
+        if valor < 0:
+            raise ValueError("preco não pode ser negativo")
+        self._preco = valor
 
     def aplicar_desconto(self, percentual: float) -> None:
         """
@@ -27,9 +46,8 @@ class Produto:
 if __name__ == "__main__":
     # Teste 1: imprimir produto
     produto = Produto(2, "Caneta", 2.50)
-    print(produto)
+    print(produto)  # Produto(id=2, nome='Caneta', preco=2.50, ativo=True)
 
     # Teste 2: aplicar desconto e imprimir
     p1 = Produto(1, "Caderno", 15.00)
-    p1.aplicar_desconto(10)
-    print(p1)  # Deve mostrar o preço com 10% de desconto
+    p1.aplicar_desconto(10)  # Aplica 10% de desconto
