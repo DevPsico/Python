@@ -25,4 +25,4 @@ class ProdutoRead(ProdutoBase):
     id: int = Field(..., title="ID do Produto")
 
     class Config:
-        orm_mode = True
+        from_attributes = True
