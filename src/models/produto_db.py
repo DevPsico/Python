@@ -18,3 +18,6 @@ class ProdutoDB(Base):
     nome = Column(String(100), nullable=False)
     preco = Column(Float, nullable=False)
     ativo = Column(Boolean, nullable=False, default=True)
+
+    def __repr__(self) -> str:
+        return f"<ProdutoDB(id={self.id}, nome='{self.nome}', preco={self.preco}, ativo={self.ativo})>"
